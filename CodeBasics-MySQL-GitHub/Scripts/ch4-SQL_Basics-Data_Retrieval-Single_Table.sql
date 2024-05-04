@@ -1,3 +1,4 @@
+-- Data Retrieval using Text Queries
 /* 
 SELECT * FROM moviesdb.movies;
 SELECT * FROM movies;
@@ -28,6 +29,9 @@ SELECT * FROM movies WHERE title LIKE "%america%";
 -- empty string
 SELECT * FROM movies WHERE studio = "";
 */
+
+-- Data Retrieval using Numeric Queries
+/*
 -- Numeric Query : >, >=, < , <= 
 -- Movies where imdb rating is greater than 9
 SELECT * FROM movies WHERE imdb_rating > 9;
@@ -90,3 +94,73 @@ ORDER BY imdb_rating DESC LIMIT 5;
 SELECT *
 FROM movies
 ORDER BY imdb_rating DESC LIMIT 5 OFFSET 5;
+*/
+
+-- Summary Analytics
+-- maximum imdb rating for bollywood movies (Highest IMDB Rating for a bollywood movies)
+SELECT MAX(imdb_rating)
+FROM movies
+WHERE industry = "bollywood";
+
+-- Highest Rated Bollywood Movie
+SELECT *
+FROM movies
+WHERE industry="bollywood" ORDER BY imdb_rating DESC LIMIT 1;
+
+SELECT *
+FROM movies
+WHERE industry="bollywood" ORDER BY imdb_rating DESC LIMIT 3;
+
+-- minimum imdb rating for bollywood movies (Lowest IMDB Rating for a bollywood movies)
+SELECT MIN(imdb_rating)
+FROM movies
+WHERE industry="bollywood";
+
+-- Average rating of Marvel Movies
+SELECT AVG(imdb_rating)
+FROM movies
+WHERE studio="marvel studios";
+
+-- min, max and average imdb rating of marvel movies
+SELECT MIN(imdb_rating) as min_rating,
+	MAX(imdb_rating) as max_rating,
+	ROUND(AVG(imdb_rating),1) as avg_rating
+FROM movies
+WHERE studio="marvel studios";
+
+-- number of movies from different industries
+SELECT 
+	industry, COUNT(*) as count
+FROM movies
+GROUP BY industry;
+
+-- number of movies from different studios
+SELECT
+	studio, COUNT(*) as count
+FROM movies
+GROUP BY studio
+ORDER BY count DESC;
+
+-- number of movies in differet industries with average imdb rating
+SELECT 
+	industry,
+    COUNT(industry) as count,
+    ROUND(AVG(imdb_rating),1) as avg_rating
+FROM movies
+GROUP BY industry;
+
+-- number of movies produced by differet studios with their average imdb rating
+SELECT
+	studio,
+    COUNT(studio) as count,
+    ROUND(AVG(imdb_rating),1) as avg_rating
+FROM movies
+WHERE studio!=""
+GROUP BY studio 
+ORDER BY avg_rating DESC;
+
+-- why do we have two rows for Universal Pictures ?
+-- 'Universal Pictures'
+-- 'Universal Pictures  '
+-- Ans: it's because of the data error --> extra space in the end of 'Universal Pictures  '
+-- we can simply clean it using the concepts that we have learnt in excel data cleaning --> Find and Replace
