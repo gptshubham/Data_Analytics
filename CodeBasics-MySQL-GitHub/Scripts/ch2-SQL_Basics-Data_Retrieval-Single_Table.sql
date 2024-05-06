@@ -97,6 +97,7 @@ ORDER BY imdb_rating DESC LIMIT 5 OFFSET 5;
 */
 
 -- Summary Analytics
+/*
 -- maximum imdb rating for bollywood movies (Highest IMDB Rating for a bollywood movies)
 SELECT MAX(imdb_rating)
 FROM movies
@@ -164,3 +165,57 @@ ORDER BY avg_rating DESC;
 -- 'Universal Pictures  '
 -- Ans: it's because of the data error --> extra space in the end of 'Universal Pictures  '
 -- we can simply clean it using the concepts that we have learnt in excel data cleaning --> Find and Replace
+
+-- Summary Analytics Revision
+*/
+
+-- Having Clause
+-- print all years where more than 2 movies were released
+SELECT release_year, COUNT(*) as movies_count
+FROM movies
+GROUP BY release_year
+HAVING movies_count > 2
+ORDER BY movies_count DESC;
+
+-- Calculated Columns
+-- Actors' Age Column
+SELECT *, YEAR(CURDATE()) - birth_year AS age
+FROM actors;
+
+-- Profit Column
+SELECT * , revenue - budget as Profit
+FROM financials;
+-- Alternatively we can get profit column just after revenue column or anywhere we want for that matter
+SELECT movie_id, budget, revenue, revenue - budget as profit , unit, currency
+FROM financials;
+
+-- currency conversion
+SELECT 
+	*,
+    IF(currency='USD',budget * 84,budget) as budget_in_INR,
+    IF(currency='USD',revenue * 84,revenue) as revenue_in_INR,
+    IF(currency='USD',(revenue - budget) * 84,revenue - budget) as profit_in_INR
+FROM financials;
+    
+-- unit conversion
+-- checking no. of different units
+SELECT distinct unit 
+FROM financials;
+-- since we have more than two units ==> CASE Statement
+SELECT * ,
+CASE
+	WHEN unit='billions' THEN revenue*1000
+    WHEN unit='Thousands' THEN revenue/1000
+    ELSE revenue
+END AS revenue_mln,
+CASE
+	WHEN unit='billions' THEN budget*1000
+    WHEN unit='Thousands' THEN budget/1000
+    ELSE budget
+END AS budget_mln,
+CASE
+	WHEN unit='billions' THEN (revenue - budget)*1000
+    WHEN unit='Thousands' THEN (revenue - budget)/1000
+    ELSE revenue - budget
+END AS profit_mln
+FROM financials;
