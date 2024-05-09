@@ -1,0 +1,5 @@
+IBM Data Analyst Professional Certificate on Edx or Coursera
+Course 2 : Analyzing Data with Excel (Edx)
+Final Project Row Dataset Link :
+
+https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-DA0130EN-SkillsNetwork/edX_Final/Data/sales_data_sample.csv
