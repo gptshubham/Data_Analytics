@@ -89,7 +89,7 @@ CROSS JOIN food_db.variants;
 */
 
 -- Analytics on Tables
-
+/*
 SELECT 
 	m.movie_id,
     title,
@@ -115,3 +115,43 @@ JOIN financials f
 ON m.movie_id=f.movie_id
 WHERE industry="bollywood"
 ORDER BY profit_mln DESC;
+*/
+
+-- Joining more than two tables
+
+-- Requirement 1: Table showing name of actors that have worked in a movie
+SELECT 
+	title as movie,
+    group_concat(name) as actors
+FROM movies m
+JOIN movie_actor ma ON ma.movie_id=m.movie_id
+JOIN actors a ON a.actor_id=ma.actor_id
+GROUP BY m.movie_id;
+
+-- Requirement 2: Table showing name of actors, separated by |, that have worked in a movie 
+SELECT 
+	m.movie_id, title, group_concat(name separator " | ") as actors
+FROM movies m
+JOIN movie_actor ma ON m.movie_id = ma.movie_id
+JOIN actors a ON ma.actor_id = a.actor_id
+GROUP BY m.movie_id;
+
+-- Requirement 3: Table showing name of movies that an actor has done
+SELECT 
+	a.name as actor,
+    group_concat(m.title) as movies
+FROM actors a
+JOIN movie_actor ma ON ma.actor_id = a.actor_id
+JOIN movies m ON m.movie_id = ma.movie_id
+GROUP BY a.actor_id;
+
+-- Requirement 4: Table showing name and number of movies that an actor has done
+SELECT 
+	a.name as actor,
+    group_concat(m.title) as movies,
+    COUNT(m.title) as movie_count
+FROM actors a
+JOIN movie_actor ma ON ma.actor_id = a.actor_id
+JOIN movies m ON m.movie_id = ma.movie_id
+GROUP BY a.actor_id
+ORDER BY movie_count DESC;
