@@ -1,3 +1,4 @@
+/*
 # 1. Subquery that returns a Single Value
 -- movie with highest imdb rating
 -- Option 1 : ORDER BY , LIMIT
@@ -96,3 +97,42 @@ select max(imdb_rating) from movies where studio = 'marvel studios');
 select * from movies where imdb_rating > ALL(
 select imdb_rating from movies where studio = 'marvel studios')
 
+*/
+
+# Co-related Subquery
+-- Example 4 : select the actor id , actor name and the total number of movies they acted in 
+
+-- Option 1 : using left join (actors and movie_actor tables) and group by 
+select 
+	a.actor_id as actor_id, name, count(*) as movie_count
+from actors a
+left join movie_actor ma on ma.actor_id=a.actor_id
+group by actor_id
+order by movie_count desc;
+
+-- Option 2 : using Co-related Subquery
+select 
+	actor_id,
+    name,
+    (select count(*) from movie_actor
+     where actor_id=actors.actor_id) as movie_count
+from actors
+order by movie_count desc;
+
+# EXPLAIN ANALYZE
+explain analyze
+select 
+	a.actor_id as actor_id, name, count(*) as movie_count
+from actors a
+join movie_actor ma on ma.actor_id=a.actor_id
+group by actor_id
+order by movie_count desc;
+
+explain analyze 
+select 
+	actor_id,
+    name,
+    (select count(*) from movie_actor
+     where actor_id=actors.actor_id) as movie_count
+from actors
+order by movie_count desc;
