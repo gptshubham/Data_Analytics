@@ -99,6 +99,7 @@ select imdb_rating from movies where studio = 'marvel studios')
 
 */
 
+/*
 # Co-related Subquery
 -- Example 4 : select the actor id , actor name and the total number of movies they acted in 
 
@@ -136,3 +137,83 @@ select
      where actor_id=actors.actor_id) as movie_count
 from actors
 order by movie_count desc;
+*/
+
+# Common Table Expression (CTE)
+
+-- CTE Exampel 1 : get all actors with age between 70 and 85
+
+-- Option 1 : using subquery
+select actor, age 
+from 
+	(select 
+		name as actor,
+		year(curdate()) - birth_year as age
+	from actors) as actor_age
+where age > 70 and age < 85;
+
+-- Option 2 : using Common Table Expression (CTE)
+
+with actor_age as (
+	select 
+		name as actor,
+		year(curdate()) - birth_year as age
+	from actors
+)
+select actor , age 
+from actor_age
+where age > 70 and age < 85;
+
+-- Alternatively , we can also do it as follows
+
+with actor_age(actor,age) as (
+	select 
+		name,
+		year(curdate()) - birth_year
+	from actors
+)
+select actor , age 
+from actor_age
+where age > 70 and age < 85;
+
+-- CTE Example 2 : movies that produced 500% or more profit and their rating was less than avg rating for all movies
+-- Option 1A : using CTE
+with 
+movies_financials as (
+	select 
+		m.movie_id as movie_id, title, imdb_rating, budget, revenue, unit, currency
+	from movies m
+	join financials f
+	on m.movie_id=f.movie_id
+),
+less_than_avg_imdb_rating_movies as (
+	select * from movies where imdb_rating < (
+	select avg(imdb_rating) from movies)
+)
+select * from movies_financials
+join less_than_avg_imdb_rating_movies
+on movies_financials.movie_id=less_than_avg_imdb_rating_movies.movie_id
+where revenue >= (budget * 6);
+
+-- let's summarize what I've done in CTE Example 2 
+-- 1. created a CTE joining movies and financial tables. 
+-- 2. created another CTE for movies with imdb_rating lower than average imdb rating
+-- 3. joined the two CTEs using inner join so we have only those movies which has lower than avg imdb rating
+-- 4. queried for movies with 500% or more profit , giving us the ultimate table i,e;
+-- 5. table showing movies with imdb rating less than average imdb rating and 500% or more profit
+
+-- Alternatively, we can also do it as follows (compact version) -- preferred version
+with less_than_avg_imdb_rating_movies as (
+	select * from movies where imdb_rating < (
+	select avg(imdb_rating) from movies)
+)
+select 
+	f.movie_id, title, m.imdb_rating,
+	round((revenue-budget)*100/budget,2) as profit_pct
+ from financials f
+join less_than_avg_imdb_rating_movies m
+on f.movie_id=m.movie_id
+where revenue >= (budget * 6);
+
+-- Alternatively , we can also get the required results using subqueries 
+-- However CTE is preferred compared to subqueries as CTE is more mopact and concise
