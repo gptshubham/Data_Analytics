@@ -140,7 +140,7 @@ order by movie_count desc;
 */
 
 # Common Table Expression (CTE)
-
+/*
 -- CTE Exampel 1 : get all actors with age between 70 and 85
 
 -- Option 1 : using subquery
@@ -217,3 +217,29 @@ where revenue >= (budget * 6);
 
 -- Alternatively , we can also get the required results using subqueries 
 -- However CTE is preferred compared to subqueries as CTE is more mopact and concise
+*/
+-- 6th highest imdb_rating
+select imdb_rating from movies order by imdb_rating limit 1 offset 6;
+SELECT imdb_rating FROM movies ORDER BY imdb_rating DESC LIMIT 5 OFFSET 1;
+SELECT DISTINCT(imdb_rating) FROM movies ORDER BY imdb_rating DESC LIMIT 5 OFFSET 1;
+SELECT DISTINCT(imdb_rating) FROM movies ORDER BY imdb_rating DESC LIMIT 1 OFFSET 5;
+
+-- outlier 
+select * from movies
+where 
+	imdb_rating > 7.95 + (select stddev(imdb_rating) from movies) 
+    or
+    imdb_rating < 7.95 - (select stddev(imdb_rating) from movies);
+
+-- most youngest and oldest 3 actors from our movies database
+
+(select *
+from actors
+order by birth_year desc
+limit 3)
+union
+(select *
+from actors
+order by birth_year
+limit 3);
+
