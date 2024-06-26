@@ -1,4 +1,4 @@
--- Month
+-- Month & Sold Quality
 select *
 from fact_sales_monthly
 where 
@@ -10,13 +10,7 @@ where
 	get_fiscal_year(date)='2021'
 order by date desc;
 
-
--- Product Name 
--- Variant
--- Sold Quality
--- Gross Price Per Item
--- Gross Price Total
-
+/*
 # Exercise - sales report of fy 2021 Q4 related to croma India
 select * from fact_sales_monthly
 where 
@@ -25,4 +19,38 @@ where
     -- get_fiscal_quarter(date) = "Q4"
     -- alternatively we can fetch quarter using get fiscal month
     get_fiscal_month(date) between 10 and 12
+*/
+
+-- Product Name & Variant
+select 
+	product,
+    variant
+from dim_product;
+
+-- Gross Price Per Item
+select gross_price from fact_gross_price;
+
+-- Gross Price Total --> sold qty * gross_price per item
+
+
+# final query
+select 
+	fsm.date, fsm.product_code,
+    dp.product, dp.variant, fsm.sold_quantity, 
+    fgp.gross_price,
+    ROUND(fsm.sold_quantity * fgp.gross_price, 2) as gross_price_total
+from fact_sales_monthly fsm
+join dim_product dp
+on fsm.product_code=dp.product_code
+join fact_gross_price fgp
+on 
+	fsm.product_code = fgp.product_code and 
+	get_fiscal_year(fsm.date) = fgp.fiscal_year
+where 
+	customer_code=90002002 and
+	get_fiscal_year(date)='2021'
+order by date ;
+
+
+
 
