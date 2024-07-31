@@ -1,0 +1,16 @@
+movie_id,title,industry,release_year,imdb_rating,studio,language_id
+102,"Doctor Strange in the Multiverse of Madness",Hollywood,2022,7.0,"Marvel Studios",5
+103,"Thor: The Dark World ",Hollywood,2013,6.8,"Marvel Studios",5
+104,"Thor: Ragnarok ",Hollywood,2017,7.9,"Marvel Studios",5
+105,"Thor: Love and Thunder ",Hollywood,2022,6.8,"Marvel Studios",5
+107,"Dilwale Dulhania Le Jayenge",Bollywood,1995,8.0,"Yash Raj Films",1
+109,"Kabhi Khushi Kabhie Gham",Bollywood,2001,7.4,"Dharma Productions",1
+110,"Bajirao Mastani ",Bollywood,2015,7.2,,1
+115,"The Pursuit of Happyness",Hollywood,2006,8.0,"Columbia Pictures",5
+117,Titanic,Hollywood,1997,7.9,"Paramount Pictures",5
+119,Avatar,Hollywood,2009,7.8,"20th Century Fox",5
+132,"Pushpa: The Rise - Part 1",Bollywood,2021,7.6,"Mythri Movie Makers",2
+133,RRR,Bollywood,2022,8.0,"DVV Entertainment",2
+134,"Baahubali: The Beginning",Bollywood,2015,8.0,"Arka Media Works",2
+137,"Captain America: The First Avenger",Hollywood,2011,6.9,"Marvel Studios",5
+138,"Captain America: The Winter Soldier",Hollywood,2014,7.8,"Marvel Studios",5

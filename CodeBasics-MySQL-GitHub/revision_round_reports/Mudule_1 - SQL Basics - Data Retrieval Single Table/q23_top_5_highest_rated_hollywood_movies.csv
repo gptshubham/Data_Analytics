@@ -1,0 +1,6 @@
+movie_id,title,industry,release_year,imdb_rating,studio,language_id
+111,"The Shawshank Redemption",Hollywood,1994,9.3,"Castle Rock Entertainment",5
+120,"The Godfather",Hollywood,1972,9.2,"Paramount Pictures",5
+121,"The Dark Knight",Hollywood,2008,9.0,Syncopy,5
+122,"Schindler's List",Hollywood,1993,9.0,"Universal Pictures",5
+112,Inception,Hollywood,2010,8.8,"Warner Bros. Pictures",5

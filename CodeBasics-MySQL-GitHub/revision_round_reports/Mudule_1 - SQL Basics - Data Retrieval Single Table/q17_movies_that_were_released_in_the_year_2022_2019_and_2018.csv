@@ -1,0 +1,11 @@
+movie_id,title,industry,release_year,imdb_rating,studio,language_id
+101,"K.G.F: Chapter 2",Bollywood,2022,8.4,"Hombale Films",3
+102,"Doctor Strange in the Multiverse of Madness",Hollywood,2022,7.0,"Marvel Studios",5
+105,"Thor: Love and Thunder ",Hollywood,2022,6.8,"Marvel Studios",5
+124,Parasite,Hollywood,2019,8.5,,5
+125,"Avengers: Endgame",Hollywood,2019,8.4,"Marvel Studios",5
+126,"Avengers: Infinity War",Hollywood,2018,8.4,"Marvel Studios",5
+131,Sanju,Bollywood,2018,NULL,"Vinod Chopra Films",1
+133,RRR,Bollywood,2022,8.0,"DVV Entertainment",2
+135,"The Kashmir Files",Bollywood,2022,8.3,"Zee Studios",1
+139,"Race 3",Bollywood,2018,1.9,"Salman Khan Films",1

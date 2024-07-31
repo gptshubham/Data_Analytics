@@ -1,0 +1,3 @@
+movie_id,title,industry,release_year,imdb_rating,studio,language_id
+111,"The Shawshank Redemption",Hollywood,1994,9.3,"Castle Rock Entertainment",5
+120,"The Godfather",Hollywood,1972,9.2,"Paramount Pictures",5
